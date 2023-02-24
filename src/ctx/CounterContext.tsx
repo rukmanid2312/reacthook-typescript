@@ -8,10 +8,12 @@ import React, {
 export type CounterContextProps = {
   counter: number;
   increment: () => void;
+  decrement: () => void;
 };
 export const CounterContext = createContext<CounterContextProps>({
   counter: 0,
   increment: () => {},
+  decrement: () => {},
 });
 export const useCounter = () => {
   const context = useContext(CounterContext);
@@ -27,8 +29,14 @@ export const CounterProvider = (props: {
   function increment() {
     setCounter(counter + 1);
   }
+  function decrement() {
+    setCounter(counter - 1);
+  }
   return (
-    <CounterContext.Provider {...props} value={{ counter, increment }}>
+    <CounterContext.Provider
+      {...props}
+      value={{ counter, increment, decrement }}
+    >
       {props.children}
     </CounterContext.Provider>
   );
